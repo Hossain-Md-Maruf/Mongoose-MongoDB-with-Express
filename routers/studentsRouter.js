@@ -92,8 +92,8 @@ const studentDelete = (req,res)=>
 
 
 
-router.route('/api/students').get(studentList).post(newStudent);
+router.route('/').get(studentList).post(newStudent);
 
-router.route('/api/students/:id').get(studentDetail).put(studentUpdate).delete(studentDelete);
+router.route('/:id').get(studentDetail).put(studentUpdate).delete(studentDelete);
 
 module.exports = router;
