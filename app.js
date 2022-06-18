@@ -2,31 +2,19 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 const studentsRouter = require('./routers/studentsRouter');
+const mongoose = require('mongoose');
+//const {Student} = require('./models/students');
+
+mongoose.connect('mongodb://localhost:27017/my-student-2',
+{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(()=> console.log('Created MongoDB connection susscessfully!'))
+.catch(err=> console.error('MongoDB connection failed!!'));
 
 app.use(express.json());
-app.use((req, res, next)=>
-{
-    console.log("I am middleware 1");
-    next();
-});
-app.use(express.urlencoded({extended: true}));
-
-app.use(express.static('Public'));
-app.use(morgan('tiny'));
-
-app.use((req, res, next)=>
-{
-    console.log("I am middleware 2!");
-    next();
-});
 app.use('/api/students', studentsRouter);
-app.get('/', (req,res,next)=>
-{
-    //res.send("Another response!!");
-    //console.log('hello');
-    next();
-});
-
 app.get('/',(req, res)=>
 {
     res.send('Hello from express js!');
